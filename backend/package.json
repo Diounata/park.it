@@ -3,6 +3,10 @@
     "test": "vitest"
   },
   "devDependencies": {
+    "@types/uuid": "^10.0.0",
     "vitest": "^2.1.1"
+  },
+  "dependencies": {
+    "uuid": "^10.0.0"
   }
 }

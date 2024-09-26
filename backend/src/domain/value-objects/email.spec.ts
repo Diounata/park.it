@@ -8,6 +8,8 @@ describe('[VO] Email', () => {
   })
 
   it('should throws an error when creating an invalid email', () => {
-    expect(() => new Email('invalidemail@email')).toThrow(new Error('Invalid email'))
+    const email = 'invalid.email@email'
+
+    expect(() => new Email(email)).toThrow(new Error('Invalid email'))
   })
 })
