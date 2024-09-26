@@ -16,5 +16,6 @@ describe('[Entity] User', () => {
     expect(user.getName()).toBe(props.name)
     expect(user.getEmail()).toBe(props.email)
     expect(user.getPassword()).toBeTruthy()
+    expect(user.verifyRawPassword(props.rawPassword)).toBe(true)
   })
 })

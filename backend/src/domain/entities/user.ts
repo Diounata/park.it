@@ -38,4 +38,8 @@ export class User {
   getPassword() {
     return this.password.getValue()
   }
+
+  verifyRawPassword(password: string) {
+    return this.password.verifyRawPassword(password)
+  }
 }
