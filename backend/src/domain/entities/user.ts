@@ -1,5 +1,4 @@
 import { v4 as uuid } from 'uuid'
-
 import { Email } from '../value-objects/email'
 import { Password, PasswordFactory } from '../value-objects/password'
 

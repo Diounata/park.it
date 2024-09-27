@@ -1,5 +1,6 @@
 import { User } from '../../../domain/entities/user'
 import { UsersRepository } from '../../repositories/users-repository'
+import { UseCase } from '../use-case'
 
 export interface Input {
   user: {
@@ -9,7 +10,7 @@ export interface Input {
   }
 }
 
-export class CreateUserUseCase {
+export class CreateUserUseCase implements UseCase {
   constructor(private usersRepository: UsersRepository) {}
 
   async handle(input: Input): Promise<void> {
