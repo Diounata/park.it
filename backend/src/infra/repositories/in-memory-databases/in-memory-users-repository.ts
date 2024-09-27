@@ -2,7 +2,14 @@ import { UsersRepository } from '../../../application/repositories/users-reposit
 import { User } from '../../../domain/entities/user'
 
 export class InMemoryUsersRepository implements UsersRepository {
-  users: User[] = []
+  users: User[] = [
+    new User({
+      id: 'user-id',
+      name: 'John Doe',
+      email: 'johndoe@email.com',
+      rawPassword: '123456',
+    }),
+  ]
 
   async create(user: User): Promise<void> {
     this.users.push(user)

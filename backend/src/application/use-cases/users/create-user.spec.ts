@@ -15,8 +15,8 @@ describe('[UC] Create user', () => {
   it('should create a user', async () => {
     const input: Input = {
       user: {
-        name: 'Username',
-        email: 'user@email.com',
+        name: 'User name',
+        email: 'new.user@email.com',
         rawPassword: '123456',
       },
     }
@@ -27,13 +27,12 @@ describe('[UC] Create user', () => {
   it('should not create a user with an email being used', async () => {
     const input: Input = {
       user: {
-        name: 'Username',
-        email: 'user@email.com',
+        name: 'John Doe',
+        email: 'johndoe@email.com',
         rawPassword: '123456',
       },
     }
 
-    await sut.handle(input)
     expect(sut.handle(input)).rejects.toThrow(new Error('This email is being used'))
   })
 })
