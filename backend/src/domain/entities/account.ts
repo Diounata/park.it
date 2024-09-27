@@ -2,20 +2,20 @@ import { v4 as uuid } from 'uuid'
 import { Email } from '../value-objects/email'
 import { Password, PasswordFactory } from '../value-objects/password'
 
-interface UserProps {
+interface AccountProps {
   id?: string
   name: string
   email: string
   rawPassword: string
 }
 
-export class User {
+export class Account {
   private readonly id: string
   private name: string
   private email: Email
   private password: Password
 
-  constructor({ id, name, email, rawPassword }: UserProps) {
+  constructor({ id, name, email, rawPassword }: AccountProps) {
     this.id = id ?? uuid()
     this.name = name
     this.email = new Email(email)
