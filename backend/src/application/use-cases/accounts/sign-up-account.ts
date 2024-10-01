@@ -10,7 +10,7 @@ export interface Input {
   }
 }
 
-export class CreateAccountUseCase implements UseCase {
+export class SignUpAccountUseCase implements UseCase {
   constructor(private accountsRepository: AccountsRepository) {}
 
   async handle(input: Input): Promise<void> {

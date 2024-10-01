@@ -1,18 +1,18 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import { InMemoryAccountsRepository } from '../../../infra/repositories/in-memory-databases/in-memory-accounts-repository'
 import { AccountsRepository } from '../../repositories/accounts-repository'
-import { CreateAccountUseCase, Input } from './create-account'
+import { Input, SignUpAccountUseCase } from './sign-up-account'
 
 let accountsRepository: AccountsRepository
-let sut: CreateAccountUseCase
+let sut: SignUpAccountUseCase
 
-describe('[UC] Create account', () => {
+describe('[UC] Sign up account', () => {
   beforeEach(() => {
     accountsRepository = new InMemoryAccountsRepository()
-    sut = new CreateAccountUseCase(accountsRepository)
+    sut = new SignUpAccountUseCase(accountsRepository)
   })
 
-  it('should create an account', async () => {
+  it('should sign up an account', async () => {
     const input: Input = {
       account: {
         name: 'Account name',
@@ -24,7 +24,7 @@ describe('[UC] Create account', () => {
     expect(sut.handle(input)).resolves
   })
 
-  it('should not create an account with an email being used', async () => {
+  it('should not sign up an account with an email being used', async () => {
     const input: Input = {
       account: {
         name: 'John Doe',

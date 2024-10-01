@@ -8,7 +8,7 @@ export interface Input {
   }
 }
 
-export class AuthenticateAccountUseCase implements UseCase {
+export class SignInAccountUseCase implements UseCase {
   constructor(private accountsRepository: AccountsRepository) {}
 
   async handle(input: Input): Promise<string> {

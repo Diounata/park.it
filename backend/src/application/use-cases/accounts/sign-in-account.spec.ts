@@ -1,18 +1,18 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import { InMemoryAccountsRepository } from '../../../infra/repositories/in-memory-databases/in-memory-accounts-repository'
 import { AccountsRepository } from '../../repositories/accounts-repository'
-import { AuthenticateAccountUseCase, Input } from './authenticate-account'
+import { Input, SignInAccountUseCase } from './sign-in-account'
 
 let accountsRepository: AccountsRepository
-let sut: AuthenticateAccountUseCase
+let sut: SignInAccountUseCase
 
-describe('[UC] Authenticate account', () => {
+describe('[UC] Sign in account', () => {
   beforeEach(() => {
     accountsRepository = new InMemoryAccountsRepository()
-    sut = new AuthenticateAccountUseCase(accountsRepository)
+    sut = new SignInAccountUseCase(accountsRepository)
   })
 
-  it('should authenticate an account with correct credentials', async () => {
+  it('should sign in an account with correct credentials', async () => {
     const input: Input = {
       account: {
         email: 'johndoe@email.com',
@@ -25,7 +25,7 @@ describe('[UC] Authenticate account', () => {
     expect(response).toBe('signed-token')
   })
 
-  it('should not authenticate an account with wrong credentials', async () => {
+  it('should not sign in an account with wrong credentials', async () => {
     const input: Input = {
       account: {
         email: 'johndoe@email.com',
@@ -36,7 +36,7 @@ describe('[UC] Authenticate account', () => {
     expect(sut.handle(input)).rejects.toThrow(new Error('Invalid account credentials'))
   })
 
-  it('should throws when trying to authenticate a non existent account', async () => {
+  it('should throws when trying to sign in a non existent account', async () => {
     const input: Input = {
       account: {
         email: 'non.existent.account@email.com',
