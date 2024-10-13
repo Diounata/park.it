@@ -1,3 +1,3 @@
 export interface UseCase {
-  handle(input: any): Promise<any>
+  handle(input: any): Promise<any>;
 }

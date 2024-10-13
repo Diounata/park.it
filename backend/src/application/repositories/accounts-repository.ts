@@ -1,6 +1,6 @@
-import { Account } from '../../domain/entities/account'
+import { Account } from '../../domain/entities/account';
 
-export interface AccountsRepository {
-  create(account: Account): Promise<void>
-  findAccountByEmail(email: string): Promise<Account | null>
+export abstract class AccountsRepository {
+  abstract create(account: Account): Promise<void>;
+  abstract findAccountByEmail(email: string): Promise<Account | null>;
 }

@@ -1,44 +1,44 @@
-import { v4 as uuid } from 'uuid'
-import { Email } from '../value-objects/email'
-import { Password, PasswordFactory } from '../value-objects/password'
+import { v4 as uuid } from 'uuid';
+import { Email } from '../value-objects/email';
+import { Password, PasswordFactory } from '../value-objects/password';
 
 interface AccountProps {
-  id?: string
-  name: string
-  email: string
-  rawPassword: string
+  id?: string;
+  name: string;
+  email: string;
+  rawPassword: string;
 }
 
 export class Account {
-  private readonly id: string
-  private name: string
-  private email: Email
-  private password: Password
+  private readonly id: string;
+  private name: string;
+  private email: Email;
+  private password: Password;
 
   constructor({ id, name, email, rawPassword }: AccountProps) {
-    this.id = id ?? uuid()
-    this.name = name
-    this.email = new Email(email)
-    this.password = PasswordFactory.create({ rawPassword, type: 'plain' })
+    this.id = id ?? uuid();
+    this.name = name;
+    this.email = new Email(email);
+    this.password = PasswordFactory.create({ rawPassword, type: 'plain' });
   }
 
   getId() {
-    return this.id
+    return this.id;
   }
 
   getName() {
-    return this.name
+    return this.name;
   }
 
   getEmail() {
-    return this.email.getValue()
+    return this.email.getValue();
   }
 
   getPassword() {
-    return this.password.getValue()
+    return this.password.getValue();
   }
 
   verifyRawPassword(password: string) {
-    return this.password.verifyRawPassword(password)
+    return this.password.verifyRawPassword(password);
   }
 }

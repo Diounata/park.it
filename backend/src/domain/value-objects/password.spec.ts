@@ -1,36 +1,36 @@
-import { describe, expect, it } from 'vitest'
-import { PasswordFactory } from './password'
+import { describe, expect, it } from 'vitest';
+import { PasswordFactory } from './password';
 
 describe('[VO] Password', () => {
   describe('[VO] Plain password', () => {
     it('should create a valid plain password', async () => {
-      const rawPassword = '123456'
-      const password = PasswordFactory.create({ rawPassword, type: 'plain' })
+      const rawPassword = '123456';
+      const password = PasswordFactory.create({ rawPassword, type: 'plain' });
 
-      expect(password.getValue()).toBe(rawPassword)
-    })
+      expect(password.getValue()).toBe(rawPassword);
+    });
 
     it('should throws an error when creating an invalid raw password', () => {
-      const rawPassword = '123'
+      const rawPassword = '123';
 
-      expect(() => PasswordFactory.create({ rawPassword, type: 'plain' })).toThrow(
-        new Error('Password must be greater than 5 characters')
-      )
-    })
+      expect(() =>
+        PasswordFactory.create({ rawPassword, type: 'plain' }),
+      ).toThrow(new Error('Password must be greater than 5 characters'));
+    });
 
     it('verifyRawPassword should return true when passwords are equal', () => {
-      const rawPassword = '123456'
-      const password = PasswordFactory.create({ rawPassword, type: 'plain' })
+      const rawPassword = '123456';
+      const password = PasswordFactory.create({ rawPassword, type: 'plain' });
 
-      expect(password.verifyRawPassword(rawPassword)).toBe(true)
-    })
+      expect(password.verifyRawPassword(rawPassword)).toBe(true);
+    });
 
     it('verifyRawPassword should return false when passwords are not equal', () => {
-      const rawPassword = '123456'
-      const anotherRawPassword = '654321'
-      const password = PasswordFactory.create({ rawPassword, type: 'plain' })
+      const rawPassword = '123456';
+      const anotherRawPassword = '654321';
+      const password = PasswordFactory.create({ rawPassword, type: 'plain' });
 
-      expect(password.verifyRawPassword(anotherRawPassword)).toBe(false)
-    })
-  })
-})
+      expect(password.verifyRawPassword(anotherRawPassword)).toBe(false);
+    });
+  });
+});
