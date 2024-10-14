@@ -12,21 +12,23 @@ const signUpAccountSchema = z.object({
 });
 
 type SignUpAccountSchema = z.infer<typeof signUpAccountSchema>;
-@Controller('/accounts')
+@Controller('accounts')
 export class SignUpAccountController {
   constructor(private signUpAccountUseCase: SignUpAccountUseCase) {}
 
-  @Post()
+  @Post('sign-up')
   async handle(
     @Body(new ZodValidationPipe(signUpAccountSchema))
     { account }: SignUpAccountSchema,
   ) {
-    await this.signUpAccountUseCase.handle({
+    const { accessToken } = await this.signUpAccountUseCase.handle({
       account: {
         name: account.name,
         email: account.email,
         rawPassword: account.rawPassword,
       },
     });
+
+    return { accessToken };
   }
 }

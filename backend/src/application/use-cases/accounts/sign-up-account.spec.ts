@@ -1,15 +1,18 @@
+import { FakeEncrypter } from 'test/cryptography/fake-encrypter';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { InMemoryAccountsRepository } from '../../../infra/database/in-memory-databases/in-memory-accounts-repository';
 import { AccountsRepository } from '../../repositories/accounts-repository';
 import { Input, SignUpAccountUseCase } from './sign-up-account';
 
 let accountsRepository: AccountsRepository;
+let fakeEncrypter: FakeEncrypter;
 let sut: SignUpAccountUseCase;
 
 describe('[UC] Sign up account', () => {
   beforeEach(() => {
     accountsRepository = new InMemoryAccountsRepository();
-    sut = new SignUpAccountUseCase(accountsRepository);
+    fakeEncrypter = new FakeEncrypter();
+    sut = new SignUpAccountUseCase(accountsRepository, fakeEncrypter);
   });
 
   it('should sign up an account', async () => {
@@ -21,7 +24,9 @@ describe('[UC] Sign up account', () => {
       },
     };
 
-    expect(sut.handle(input)).resolves;
+    expect(sut.handle(input)).resolves.toEqual({
+      accessToken: expect.any(String),
+    });
   });
 
   it('should not sign up an account with an email being used', async () => {

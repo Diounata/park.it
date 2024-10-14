@@ -1,15 +1,18 @@
+import { FakeEncrypter } from 'test/cryptography/fake-encrypter';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { InMemoryAccountsRepository } from '../../../infra/database/in-memory-databases/in-memory-accounts-repository';
 import { AccountsRepository } from '../../repositories/accounts-repository';
 import { Input, SignInAccountUseCase } from './sign-in-account';
 
 let accountsRepository: AccountsRepository;
+let fakeEncrypter: FakeEncrypter;
 let sut: SignInAccountUseCase;
 
 describe('[UC] Sign in account', () => {
   beforeEach(() => {
     accountsRepository = new InMemoryAccountsRepository();
-    sut = new SignInAccountUseCase(accountsRepository);
+    fakeEncrypter = new FakeEncrypter();
+    sut = new SignInAccountUseCase(accountsRepository, fakeEncrypter);
   });
 
   it('should sign in an account with correct credentials', async () => {
@@ -20,9 +23,9 @@ describe('[UC] Sign in account', () => {
       },
     };
 
-    const response = await sut.handle(input);
-
-    expect(response).toBe('signed-token');
+    expect(sut.handle(input)).resolves.toEqual({
+      accessToken: expect.any(String),
+    });
   });
 
   it('should not sign in an account with wrong credentials', async () => {
