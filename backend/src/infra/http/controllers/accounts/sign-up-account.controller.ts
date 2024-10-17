@@ -1,7 +1,7 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { SignUpAccountUseCase } from 'src/application/use-cases/accounts/sign-up-account';
 import { z } from 'zod';
-import { ZodValidationPipe } from '../../pipes/zod-validation-pipe';
+import { ZodValidationPipe } from '../../pipes/zod-validation.pipe';
 
 const signUpAccountSchema = z.object({
   account: z.object({
@@ -12,6 +12,7 @@ const signUpAccountSchema = z.object({
 });
 
 type SignUpAccountSchema = z.infer<typeof signUpAccountSchema>;
+
 @Controller('accounts')
 export class SignUpAccountController {
   constructor(private signUpAccountUseCase: SignUpAccountUseCase) {}
