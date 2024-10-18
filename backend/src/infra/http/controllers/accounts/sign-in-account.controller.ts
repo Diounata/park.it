@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, HttpCode, Post } from '@nestjs/common';
 import { SignInAccountUseCase } from 'src/application/use-cases/accounts/sign-in-account';
 import { z } from 'zod';
 import { ZodValidationPipe } from '../../pipes/zod-validation.pipe';
@@ -17,6 +17,7 @@ export class SignInAccountController {
   constructor(private signInAccountUseCase: SignInAccountUseCase) {}
 
   @Post('sign-in')
+  @HttpCode(200)
   async handle(
     @Body(new ZodValidationPipe(signInAccountSchema))
     { account }: SignInAccountSchema,
