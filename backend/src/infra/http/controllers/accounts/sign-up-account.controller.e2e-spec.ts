@@ -2,7 +2,6 @@ import { INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import { AppModule } from 'src/infra/app.module';
 import request from 'supertest';
-import { afterEach, beforeEach, describe, test } from 'vitest';
 
 describe('[Controller] Sign up account', () => {
   let app: INestApplication;

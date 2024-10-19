@@ -1,4 +1,3 @@
-import { describe, expect, it } from 'vitest';
 import { PasswordFactory } from './password';
 
 describe('[VO] Password', () => {

@@ -1,4 +1,3 @@
-import { describe, expect, it } from 'vitest';
 import { Account } from './account';
 
 describe('[Entity] Account', () => {

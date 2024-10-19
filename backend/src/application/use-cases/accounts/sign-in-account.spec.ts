@@ -1,5 +1,4 @@
 import { FakeEncrypter } from 'test/cryptography/fake-encrypter';
-import { beforeEach, describe, expect, it } from 'vitest';
 import { InMemoryAccountsRepository } from '../../../infra/database/in-memory-databases/in-memory-accounts-repository';
 import { AccountsRepository } from '../../repositories/accounts-repository';
 import { Input, SignInAccountUseCase } from './sign-in-account';
