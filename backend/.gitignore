@@ -1,3 +1,8 @@
-/node_modules
+# General folders
 /dist
+/node_modules
+
+# General files
+
+.env
 requests.http
