@@ -35,6 +35,7 @@ export class SignUpAccountUseCase implements UseCase {
 
     const accessToken = await this.encrypter.encrypt({
       sub: account.getId(),
+      name: account.getName(),
     });
 
     return { accessToken };

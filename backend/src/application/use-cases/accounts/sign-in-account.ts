@@ -34,6 +34,7 @@ export class SignInAccountUseCase implements UseCase {
 
     const accessToken = await this.encrypter.encrypt({
       sub: account.getId(),
+      name: account.getName(),
     });
 
     return { accessToken };
