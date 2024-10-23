@@ -1,3 +1,5 @@
+import { InvalidCredentialsError } from 'src/core/errors/errors/invalid-credentials-error';
+import { ResourceNotFoundError } from 'src/core/errors/errors/resource-not-found-error';
 import { FakeEncrypter } from 'test/cryptography/fake-encrypter';
 import { InMemoryAccountsRepository } from '../../../infra/database/in-memory-databases/in-memory-accounts-repository';
 import { AccountsRepository } from '../../repositories/accounts-repository';
@@ -22,7 +24,10 @@ describe('[UC] Sign in account', () => {
       },
     };
 
-    expect(sut.handle(input)).resolves.toEqual({
+    const result = await sut.handle(input);
+
+    expect(result.isRight()).toBe(true);
+    expect(result.value).toEqual({
       accessToken: expect.any(String),
     });
   });
@@ -35,9 +40,10 @@ describe('[UC] Sign in account', () => {
       },
     };
 
-    expect(sut.handle(input)).rejects.toThrow(
-      new Error('Invalid account credentials'),
-    );
+    const result = await sut.handle(input);
+
+    expect(result.isLeft()).toBe(true);
+    expect(result.value).toBeInstanceOf(InvalidCredentialsError);
   });
 
   it('should throws when trying to sign in a non existent account', async () => {
@@ -48,6 +54,9 @@ describe('[UC] Sign in account', () => {
       },
     };
 
-    expect(sut.handle(input)).rejects.toThrow('Account not found');
+    const result = await sut.handle(input);
+
+    expect(result.isLeft()).toBe(true);
+    expect(result.value).toBeInstanceOf(ResourceNotFoundError);
   });
 });

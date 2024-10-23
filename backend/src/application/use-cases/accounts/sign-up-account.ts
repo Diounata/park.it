@@ -1,8 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { Encrypter } from 'src/application/cryptography/encrypter';
+import { Either, left, right } from 'src/core/either';
 import { Account } from '../../../domain/entities/account';
 import { AccountsRepository } from '../../repositories/accounts-repository';
 import { UseCase } from '../use-case';
+import { EmailBeingUsedError } from './errors/email-being-used-error';
 
 export interface Input {
   account: {
@@ -12,9 +14,7 @@ export interface Input {
   };
 }
 
-export interface Output {
-  accessToken: string;
-}
+export type Output = Either<Error, { accessToken: string }>;
 
 @Injectable()
 export class SignUpAccountUseCase implements UseCase {
@@ -27,7 +27,9 @@ export class SignUpAccountUseCase implements UseCase {
     const accountByEmail = await this.accountsRepository.findAccountByEmail(
       input.account.email,
     );
-    if (!!accountByEmail) throw new Error('This email is being used');
+    if (accountByEmail) {
+      return left(new EmailBeingUsedError(accountByEmail.getEmail()));
+    }
 
     const account = new Account(input.account);
 
@@ -38,6 +40,6 @@ export class SignUpAccountUseCase implements UseCase {
       name: account.getName(),
     });
 
-    return { accessToken };
+    return right({ accessToken });
   }
 }

@@ -1,6 +1,7 @@
 import { FakeEncrypter } from 'test/cryptography/fake-encrypter';
 import { InMemoryAccountsRepository } from '../../../infra/database/in-memory-databases/in-memory-accounts-repository';
 import { AccountsRepository } from '../../repositories/accounts-repository';
+import { EmailBeingUsedError } from './errors/email-being-used-error';
 import { Input, SignUpAccountUseCase } from './sign-up-account';
 
 let accountsRepository: AccountsRepository;
@@ -23,7 +24,10 @@ describe('[UC] Sign up account', () => {
       },
     };
 
-    expect(sut.handle(input)).resolves.toEqual({
+    const result = await sut.handle(input);
+
+    expect(result.isRight()).toBe(true);
+    expect(result.value).toEqual({
       accessToken: expect.any(String),
     });
   });
@@ -37,8 +41,9 @@ describe('[UC] Sign up account', () => {
       },
     };
 
-    expect(sut.handle(input)).rejects.toThrow(
-      new Error('This email is being used'),
-    );
+    const result = await sut.handle(input);
+
+    expect(result.isLeft()).toBe(true);
+    expect(result.value).toBeInstanceOf(EmailBeingUsedError);
   });
 });

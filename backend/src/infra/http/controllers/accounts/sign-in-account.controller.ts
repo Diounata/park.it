@@ -1,4 +1,10 @@
-import { Body, Controller, HttpCode, Post } from '@nestjs/common';
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  HttpCode,
+  Post,
+} from '@nestjs/common';
 import { SignInAccountUseCase } from 'src/application/use-cases/accounts/sign-in-account';
 import { z } from 'zod';
 import { ZodValidationPipe } from '../../pipes/zod-validation.pipe';
@@ -22,13 +28,15 @@ export class SignInAccountController {
     @Body(new ZodValidationPipe(signInAccountSchema))
     { account }: SignInAccountSchema,
   ) {
-    const { accessToken } = await this.signInAccountUseCase.handle({
+    const result = await this.signInAccountUseCase.handle({
       account: {
         email: account.email,
         rawPassword: account.rawPassword,
       },
     });
 
-    return { accessToken };
+    if (result.isLeft()) throw new BadRequestException(result.value.message);
+
+    return { accessToken: result.value.accessToken };
   }
 }
