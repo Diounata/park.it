@@ -1,3 +1,4 @@
+import { Timestamp } from '../value-objects/timestamp';
 import { Account } from './account';
 
 describe('[Entity] Account', () => {
@@ -16,5 +17,6 @@ describe('[Entity] Account', () => {
     expect(account.getEmail()).toBe(props.email);
     expect(account.getPassword()).toBeTruthy();
     expect(account.verifyRawPassword(props.rawPassword)).toBe(true);
+    expect(account.getTimestamp()).toBeInstanceOf(Timestamp);
   });
 });

@@ -1,12 +1,17 @@
 import { v4 as uuid } from 'uuid';
 import { Email } from '../value-objects/email';
 import { Password, PasswordFactory } from '../value-objects/password';
+import { Timestamp } from '../value-objects/timestamp';
 
 interface AccountProps {
   id?: string;
   name: string;
   email: string;
   rawPassword: string;
+  timestamp?: {
+    createdAt: Date;
+    updatedAt: Date;
+  };
 }
 
 export class Account {
@@ -14,12 +19,14 @@ export class Account {
   private name: string;
   private email: Email;
   private password: Password;
+  private timestamp: Timestamp;
 
-  constructor({ id, name, email, rawPassword }: AccountProps) {
+  constructor({ id, name, email, rawPassword, timestamp }: AccountProps) {
     this.id = id ?? uuid();
     this.name = name;
     this.email = new Email(email);
     this.password = PasswordFactory.create({ rawPassword, type: 'plain' });
+    this.timestamp = new Timestamp(timestamp?.createdAt, timestamp?.updatedAt);
   }
 
   getId() {
@@ -40,5 +47,9 @@ export class Account {
 
   verifyRawPassword(password: string) {
     return this.password.verifyRawPassword(password);
+  }
+
+  getTimestamp() {
+    return this.timestamp;
   }
 }
